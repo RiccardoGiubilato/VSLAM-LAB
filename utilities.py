@@ -120,7 +120,7 @@ def downloadFile(url, dest_dir_path, file_name=None):
     return dest_file_path
 
 
-def decompressFile(filepath, extract_to=None):
+def decompressFile(filepath, extract_to=None, flatten=False):
     """
     Decompress a .zip, .tar.gz, .tar, or .7z file and return the extraction directory.
     """
@@ -144,6 +144,18 @@ def decompressFile(filepath, extract_to=None):
     else:
         print("Unsupported file format. Please provide a .zip, .tar.gz, .tar, or .7z file.")
         return None
+
+    if flatten:
+        # Flatten directory structure if there's a single top-level directory
+        items = os.listdir(extract_to)
+        if len(items) == 1:
+            top_level_dir = os.path.join(extract_to, items[0])
+            if os.path.isdir(top_level_dir):
+                for item in os.listdir(top_level_dir):
+                    src_path = os.path.join(top_level_dir, item)
+                    dest_path = os.path.join(extract_to, item)
+                    os.rename(src_path, dest_path)
+                os.rmdir(top_level_dir)
 
     return extract_to
 
