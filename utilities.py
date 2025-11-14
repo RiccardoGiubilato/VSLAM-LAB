@@ -88,8 +88,9 @@ def find_common_sequences(experiments):
 # Downloads the given URL to a file in the given directory. Returns the
 # path to the downloaded file.
 # Taken from https://www.eth3d.net/slam_datasets/download_eth3d_slam_datasets.py.
-def downloadFile(url, dest_dir_path):
-    file_name = url.split('/')[-1]
+def downloadFile(url, dest_dir_path, file_name=None):
+    if file_name is None: 
+        file_name = url.split('/')[-1]
     dest_file_path = os.path.join(dest_dir_path, file_name)
 
     url_object = urllib.request.urlopen(url)
