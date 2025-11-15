@@ -1,0 +1,5 @@
+exp_orbslam2_s3li_vulcano:
+  Config: config_s3li_vulcano.yaml
+  NumRuns: 5
+  Parameters: {verbose: 1, mode: stereo}
+  Module: orbslam2
