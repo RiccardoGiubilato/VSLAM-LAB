@@ -21,14 +21,14 @@ class S3LI_dataset(DatasetVSLAMLab):
 
     def __init__(self, benchmark_path: str | Path) -> None:
         super().__init__("s3li", Path(benchmark_path))
-    
+
         # Load settings
         with open(self.yaml_file, "r", encoding="utf-8") as f:
             cfg = yaml.safe_load(f) or {}
-            
+
         # Get download url
         self.url_download_sequences = cfg["url_download_sequences"]
-        
+        self.sequence_nicknames = cfg["sequence_nicknames"]
 
     def download_sequence_data(self, sequence_name: str) -> None:
         sequence_path = self.dataset_path / sequence_name
@@ -38,7 +38,7 @@ class S3LI_dataset(DatasetVSLAMLab):
             url = self.url_download_sequences[sequence_name]
             print("Downloading sequence from:", url)
             downloadFile(url, str(self.dataset_path), sequence_name + ".zip")
-        
+
         if sequence_path.exists():
             shutil.rmtree(sequence_path)
 
@@ -53,7 +53,7 @@ class S3LI_dataset(DatasetVSLAMLab):
 
     def create_imu_csv(self, sequence_name: str) -> None:
         pass
-        
+
     def create_calibration_yaml(self, sequence_name: str) -> None:
         pass
 
